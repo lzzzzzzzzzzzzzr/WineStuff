@@ -11,149 +11,24 @@
       </div>
       <div id="session"
            style="display: flex; flex-wrap: wrap;">
-          <div class="sessionEntry"
-               style="
-            border: 2px solid;
-            border-radius: 1px;
-            min-width: 100px;
-            flex-basis: 40%;
-            margin: 15px;">
-              <div>Nimi: J</div>
-              <div style="height: 1em;"></div>
-              <div>1. <input type="text" /></div>
-              <div>2. <input type="text" /></div>
-              <div>3. <input type="text" /></div>
-              <div>4. <input type="text" /></div>
-              <div>5. <input type="text" /></div>
-              <div style="height: 1em;"></div>
-              <div>
-                  Maa: Italia <br />
-                  Ryp‰leet: Vitusti ryp‰leit‰<br />
-                  Kouluarvosana: 7/10
-              </div>
-              <div style="height: 1em;"></div>
-              <div>Pisteet: #</div>
-              <div>Comment:</div>
-          </div>
-          <div class="sessionEntry"
-               style="
-            border: 2px solid;
-            border-radius: 1px;
-            min-width: 100px;
-            flex-basis: 40%;
-            margin: 15px;">
-              <div>Nimi: A</div>
-              <div style="height: 1em;"></div>
-              <div>1. <input type="text" /></div>
-              <div>2. <input type="text" /></div>
-              <div>3. <input type="text" /></div>
-              <div>4. <input type="text" /></div>
-              <div>5. <input type="text" /></div>
-              <div style="height: 1em;"></div>
-              <div>
-                  Maa: Italia <br />
-                  Ryp‰leet: Vitusti ryp‰leit‰<br />
-                  Kouluarvosana: 7/10
-              </div>
-              <div style="height: 1em;"></div>
-              <div>Pisteet: #</div>
-              <div>Comment:</div>
-          </div>
-          <div class="wineEntry"
-               style="
-            border: 2px solid;
-            border-radius: 1px;
-            min-width: 100px;
-            flex-basis: 85%;
-             margin: 15px;">
-              <div>Viini</div>
-              <div>Name: 1000 Stories Zinfandel</div>
-              <div>Vuosi: 2022</div>
-              <div>Kuva: T‰h‰ tulee oikeesti kuva</div>
-              <div>pvm: T‰h‰n tulee p‰iv‰m‰‰r‰</div>
-              <div>Maa: Yhdysvallat, Kalifornia</div>
-              <div>Ryp‰leet: Petite Sirah, Syrah, Zinfandel</div>
-              <div>Mustaherukkainen, tumman kirsikkainen, mets‰npohjainen, tamminen</div>
-          </div>
+          <div class="sessionEntry"></div>
+          <div class="wineEntry"></div>
       </div>
-      <div id="session"
-           style="display: flex; flex-wrap: wrap;">
-          <div class="sessionEntry"
-               style="
-      border: 2px solid;
-      border-radius: 1px;
-      min-width: 100px;
-      flex-basis: 40%;
-      margin: 15px;">
-              <div>Nimi: J</div>
-              <div style="height: 1em;"></div>
-              <div>1. Mustaherukka</div>
-              <div>2. Luumu</div>
-              <div>3. Vanilja</div>
-              <div>4. Mausteinen</div>
-              <div>5. Tallinen</div>
-              <div style="height: 1em;"></div>
-              <div>Maa: Italia</div>
-              <div>Ryp‰leet: Vitusti ryp‰leit‰</div>
-              <div>Kouluarvosana: 7/10</div>
-              <div style="height: 1em;"></div>
-              <div>Pisteet: #</div>
-              <div>Comment:</div>
+          <div id="createSession"
+               style="border: 2px solid; border-radius: 1px;">
+              <button onclick="createSession()">createSession</button>
           </div>
-          <div class="sessionEntry"
-               style="
-      border: 2px solid;
-      border-radius: 1px;
-      min-width: 100px;
-      flex-basis: 40%;
-      margin: 15px;">
-              <div>Nimi: A</div>
-              <div style="height: 1em;"></div>
-              <div>1. Kaneli</div>
-              <div>2. Mustapippuri</div>
-              <div>3. Luumu</div>
-              <div>4. Boysenmarja</div>
-              <div>5. Herukka</div>
-              <div style="height: 1em;"></div>
-              <div>Maa: N/A</div>
-              <div>Ryp‰leet: N/A</div>
-              <div>Kouluarvosana: 8/10</div>
-              <div style="height: 1em;"></div>
-              <div>Pisteet: #</div>
-              <div>Comment:</div>
+          <div id="readSession"
+               style="border: 2px solid; border-radius: 1px;">
+              <button onclick="readSession()">readSession</button>>
           </div>
-          <div class="wineEntry"
-               style="
-      border: 2px solid;
-      border-radius: 1px;
-      min-width: 100px;
-      flex-basis: 85%;
-       margin: 15px;">
-              <div>Viini</div>
-              <div>Name: 1000 Stories Zinfandel</div>
-              <div>Vuosi: 2022</div>
-              <div>Kuva: T‰h‰ tulee oikeesti kuva</div>
-              <div>pvm: T‰h‰n tulee p‰iv‰m‰‰r‰</div>
-              <div>Maa: Yhdysvallat, Kalifornia</div>
-              <div>Ryp‰leet: Petite Sirah, Syrah, Zinfandel</div>
-              <div>Mustaherukkainen, tumman kirsikkainen, mets‰npohjainen, tamminen</div>
+          <div id="updateSession"
+               style="border: 2px solid; border-radius: 1px;">
+              <button onclick="updateSession()">updateSession</button>>
           </div>
-      </div>
-      <div id="createSession"
-           style="border: 2px solid; border-radius: 1px;">
-          <button onclick="createSession()">createSession</button>
-      </div>
-      <div id="readSession"
-           style="border: 2px solid; border-radius: 1px;">
-          <button onclick="readSession()">readSession</button>>
-      </div>
-      <div id="updateSession"
-           style="border: 2px solid; border-radius: 1px;">
-          <button onclick="updateSession()">updateSession</button>>
-      </div>
-      <div id="deleteSession"
-           style="border: 2px solid; border-radius: 1px;">
-          <button onclick="deleteSession()">deleteSession</button>>
-      </div>
-  </body>
+          <div id="deleteSession"
+               style="border: 2px solid; border-radius: 1px;">
+              <button onclick="deleteSession()">deleteSession</button>>
+          </div>
+</body>
 </html>
