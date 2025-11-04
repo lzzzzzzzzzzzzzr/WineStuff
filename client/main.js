@@ -9,17 +9,17 @@ const sessionState = [
             date: "date",
             winery: "Jokupaikka",
             grapes: ["Syrah", "Zinfandel"],
-            maut: ["Mustaherukka", "Karpalo", "Tamminen"],
+            flavors: ["Mustaherukka", "Karpalo", "Tamminen"],
             ratings: [8, 7, 8, 9],
-            kommentit: ["Tämä on viiniä", "Iha jees"]
+            comments: ["Tämä on viiniä", "Iha jees"]
         },
         playerEntries: [
             {
                 name: "A",
-                maut: ["Karpalo", "Karhunvatukka"],
-                rypäleet: ["Syrah", "Merlot"],
+                flavorGuesses: ["Karpalo", "Karhunvatukka"],
+                grapes: ["Syrah", "Merlot"],
                 country: "Espanja",
-                pisteet: 3,
+                score: 3,
                 rating: 8,
                 priceRating: 7,
                 priceGuess: 15.00,
@@ -27,10 +27,10 @@ const sessionState = [
             },
             {
                 name: "J",
-                maut: ["Karpalo", "Karhunvatukka"],
-                rypäleet: ["Syrah", "Merlot"],
+                flavorGuesses: ["Karpalo", "Karhunvatukka"],
+                grapes: ["Syrah", "Merlot"],
                 country: "Espanja",
-                pisteet: 3,
+                score: 3,
                 rating: 8,
                 priceRating: 7,
                 priceGuess: 15.00,
