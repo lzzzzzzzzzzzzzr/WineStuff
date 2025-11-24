@@ -1,7 +1,7 @@
 const sessionState = [
     {
         wineEntry: {
-            name: "Viini",
+            name: "Esirenderöity viini",
             photo: null,
             year: 2008,
             country: "Italia",
@@ -53,14 +53,19 @@ function createSession() {
 
 function readSession() {
     console.log('Read');
+    renderSession();
 }
 
 function updateSession() {
     console.log('Update');
+    // TODO: Do some changes to the sessionState here
+    renderSession();
 }
 
 function deleteSession() {
     console.log('Delete');
+    // TODO: Do some changes to the sessionState here
+    renderSession();
 }
 
 function renderSession() {
@@ -92,9 +97,9 @@ function insertInputEntry(text, entry) {
     entry.appendChild(container);
 }
 
-function createTastingEntry() {
+function createTastingEntry(tastingEntryData) {
     const playerEntries = [createPlayerEntry(), createPlayerEntry()];
-    const wineEntry = createWineEntry();
+    const wineEntry = createWineEntry(tastingEntryData?.wineEntry);
 
     return { playerEntries, wineEntry };
 }
@@ -107,7 +112,7 @@ function appendTastingEntry(session, tastingEntry) {
     })
 }
 
-function createWineEntry() {
+function createWineEntry(wineEntryData) {
     const wineEntry = document.createElement('div');
     wineEntry.className = 'wineEntry';
     wineEntry.style.border = '2px solid';
@@ -116,7 +121,7 @@ function createWineEntry() {
     wineEntry.style.flexBasis = '85%';
     wineEntry.style.margin = '15px';
 
-    const wineName = document.createTextNode('Viini');
+    const wineName = document.createTextNode(wineEntryData?.name ?? 'Viini');
     wineEntry.appendChild(wineName);
 
     insertInputEntry('Name: ', wineEntry);
