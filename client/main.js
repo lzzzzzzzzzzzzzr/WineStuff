@@ -63,6 +63,20 @@ function deleteSession() {
     console.log('Delete');
 }
 
+function renderSession() {
+    console.log('Re-rendering page content');
+    const session = document.getElementById('session');
+    session.innerHTML = '';
+
+    const tastingEntryElements = sessionState.map(tastingEntryData => {
+        return createTastingEntry(tastingEntryData); // TODO: Add support into createTastingEntry for taking pre-existing data as input
+    })
+
+    tastingEntryElements.forEach(tastingEntry => {
+        appendTastingEntry(session, tastingEntry);
+    })
+}
+
 function insertInputEntry(text, entry) {
     const container = document.createElement('div');
     const thisEntry = document.createTextNode(text)
