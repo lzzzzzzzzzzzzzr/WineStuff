@@ -47,7 +47,8 @@ function createSession() {
     sessionDiv.style.flexWrap = 'wrap';
 
     const sessio = document.getElementById('session');
-    createTastingEntry(sessio);
+    const tastingEntry = createTastingEntry();
+    appendTastingEntry(sessio, tastingEntry);
 }
 
 function readSession() {
@@ -77,13 +78,22 @@ function insertInputEntry(text, entry) {
     entry.appendChild(container);
 }
 
-function createTastingEntry(session) {
-    createPlayerEntry(session);
-    createPlayerEntry(session);
-    createWineEntry(session);
+function createTastingEntry() {
+    const playerEntries = [createPlayerEntry(), createPlayerEntry()];
+    const wineEntry = createWineEntry();
+
+    return { playerEntries, wineEntry };
 }
 
-function createWineEntry(session) {
+function appendTastingEntry(session, tastingEntry) {
+    session.appendChild(tastingEntry.wineEntry);
+
+    tastingEntry.playerEntries.forEach(entry => {
+        session.appendChild(entry);
+    })
+}
+
+function createWineEntry() {
     const wineEntry = document.createElement('div');
     wineEntry.className = 'wineEntry';
     wineEntry.style.border = '2px solid';
@@ -103,10 +113,10 @@ function createWineEntry(session) {
     insertInputEntry('Rypäleet: ', wineEntry);
     insertInputEntry('Maut: ', wineEntry);
 
-    session.appendChild(wineEntry);
+    return wineEntry;
 }
 
-function createPlayerEntry(session) {
+function createPlayerEntry() {
     const sessionEntry = document.createElement('div');
     sessionEntry.className = 'sessionEntry';
     sessionEntry.style.border = '2px solid';
@@ -145,5 +155,5 @@ function createPlayerEntry(session) {
     insertInputEntry('Pisteet: ', sessionEntry);
     insertInputEntry('Comment: ', sessionEntry);
 
-    session.appendChild(sessionEntry);
+    return sessionEntry;
 }
