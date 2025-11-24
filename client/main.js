@@ -11,7 +11,7 @@ const sessionState = [
             grapes: ["Syrah", "Zinfandel"],
             flavors: ["Mustaherukka", "Karpalo", "Tamminen"],
             ratings: [8, 7, 8, 9],
-            comments: ["T‰m‰ on viini‰", "Iha jees"]
+            comments: ["T√§m√§ on viini√§", "Iha jees"]
         },
         playerEntries: [
             {
@@ -23,7 +23,7 @@ const sessionState = [
                 rating: 8,
                 priceRating: 7,
                 priceGuess: 15.00,
-                comment: "T‰m‰ on viini‰"
+                comment: "T√§m√§ on viini√§"
             },
             {
                 name: "J",
@@ -34,7 +34,7 @@ const sessionState = [
                 rating: 8,
                 priceRating: 7,
                 priceGuess: 15.00,
-                comment: "T‰m‰ on viini‰"
+                comment: "T√§m√§ on viini√§"
             },
         ]
     }
@@ -97,10 +97,10 @@ function createWineEntry(session) {
 
     insertInputEntry('Name: ', wineEntry);
     insertInputEntry('Vuosi ', wineEntry);
-    insertInputEntry('Kuva: T‰h‰n tulee oikeesti kuva ', wineEntry);
+    insertInputEntry('Kuva: T√§h√§n tulee oikeesti kuva ', wineEntry);
     insertInputEntry('Pvm ', wineEntry);
     insertInputEntry('Maa: ', wineEntry);
-    insertInputEntry('Ryp‰leet: ', wineEntry);
+    insertInputEntry('Ryp√§leet: ', wineEntry);
     insertInputEntry('Maut: ', wineEntry);
 
     session.appendChild(wineEntry);
@@ -140,7 +140,7 @@ function createPlayerEntry(session) {
     }
 
     insertInputEntry('Maa: ', sessionEntry);
-    insertInputEntry('Ryp‰leet: ', sessionEntry);
+    insertInputEntry('Ryp√§leet: ', sessionEntry);
     insertInputEntry('Kouluarvosana: ', sessionEntry);
     insertInputEntry('Pisteet: ', sessionEntry);
     insertInputEntry('Comment: ', sessionEntry);
