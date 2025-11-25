@@ -56,12 +56,6 @@ function readSession() {
     renderSession();
 }
 
-function updateSession() {
-    console.log('Update');
-    // TODO: Do some changes to the sessionState here
-    renderSession();
-}
-
 function deleteSession() {
     console.log('Delete');
     // TODO: Do some changes to the sessionState here
