@@ -82,7 +82,10 @@ function renderSession() {
     })
 }
 
-function insertInputEntry(text, entry) {
+/**
+ * @param {*} playerEntryIndex If null, the entry is assumed to be for a wine
+ */
+function insertInputEntry(text, entry, tastingIndex, playerEntryIndex, propertyKey) {
     const container = document.createElement('div');
     const thisEntry = document.createTextNode(text)
     const textInput = document.createElement('input');
@@ -91,6 +94,17 @@ function insertInputEntry(text, entry) {
     textInput.style.background = 'transparent';
     textInput.style.border = 'none';
     textInput.style.outline = 'none';
+
+    if (tastingIndex !== undefined && propertyKey !== undefined) {
+        textInput.onchange = (e) => {
+            if (playerEntryIndex === undefined || playerEntryIndex === null) {
+                sessionState[tastingIndex].wineEntry[propertyKey] = e.target.value;
+            } else {
+                sessionState[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
+            }
+        }
+        textInput.onblur = (e) => { renderSession(); }
+    }
 
     container.appendChild(thisEntry);
     container.appendChild(textInput);
