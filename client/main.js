@@ -70,6 +70,9 @@ function deleteSession() {
 
 function renderSession() {
     console.log('Re-rendering page content');
+    console.log('Current state:')
+    console.log(sessionState);
+
     const session = document.getElementById('session');
     session.innerHTML = '';
 
