@@ -74,7 +74,7 @@ function renderSession() {
     session.innerHTML = '';
 
     const tastingEntryElements = sessionState.map(tastingEntryData => {
-        return createTastingEntry(tastingEntryData); // TODO: Add support into createTastingEntry for taking pre-existing data as input
+        return createTastingEntry(tastingEntryData);
     })
 
     tastingEntryElements.forEach(tastingEntry => {
@@ -112,7 +112,8 @@ function appendTastingEntry(session, tastingEntry) {
     })
 }
 
-function createWineEntry(wineEntryData) {
+// TODO: Initialize the input entry contents based on wineEntryData
+function createWineEntry(wineEntryData, tastingIndex) {
     const wineEntry = document.createElement('div');
     wineEntry.className = 'wineEntry';
     wineEntry.style.border = '2px solid';
