@@ -1,7 +1,7 @@
 const sessionState = [
     {
         wineEntry: {
-            name: "Esirender√∂ity viini",
+            name: "Viini",
             photo: null,
             year: 2008,
             country: "Italia",
@@ -11,7 +11,7 @@ const sessionState = [
             grapes: ["Syrah", "Zinfandel"],
             flavors: ["Mustaherukka", "Karpalo", "Tamminen"],
             ratings: [8, 7, 8, 9],
-            comments: ["T√§m√§ on viini√§", "Iha jees"]
+            comments: ["T‰m‰ on viini‰", "Iha jees"]
         },
         playerEntries: [
             {
@@ -23,7 +23,7 @@ const sessionState = [
                 rating: 8,
                 priceRating: 7,
                 priceGuess: 15.00,
-                comment: "T√§m√§ on viini√§"
+                comment: "T‰m‰ on viini‰"
             },
             {
                 name: "J",
@@ -34,7 +34,7 @@ const sessionState = [
                 rating: 8,
                 priceRating: 7,
                 priceGuess: 15.00,
-                comment: "T√§m√§ on viini√§"
+                comment: "T‰m‰ on viini‰"
             },
         ]
     }
@@ -47,39 +47,19 @@ function createSession() {
     sessionDiv.style.flexWrap = 'wrap';
 
     const sessio = document.getElementById('session');
-    const tastingEntry = createTastingEntry();
-    appendTastingEntry(sessio, tastingEntry);
+    createTastingEntry(sessio);
 }
 
 function readSession() {
     console.log('Read');
-    renderSession();
 }
 
 function updateSession() {
     console.log('Update');
-    // TODO: Do some changes to the sessionState here
-    renderSession();
 }
 
 function deleteSession() {
     console.log('Delete');
-    // TODO: Do some changes to the sessionState here
-    renderSession();
-}
-
-function renderSession() {
-    console.log('Re-rendering page content');
-    const session = document.getElementById('session');
-    session.innerHTML = '';
-
-    const tastingEntryElements = sessionState.map(tastingEntryData => {
-        return createTastingEntry(tastingEntryData); // TODO: Add support into createTastingEntry for taking pre-existing data as input
-    })
-
-    tastingEntryElements.forEach(tastingEntry => {
-        appendTastingEntry(session, tastingEntry);
-    })
 }
 
 function insertInputEntry(text, entry) {
@@ -97,22 +77,13 @@ function insertInputEntry(text, entry) {
     entry.appendChild(container);
 }
 
-function createTastingEntry(tastingEntryData) {
-    const playerEntries = [createPlayerEntry(), createPlayerEntry()];
-    const wineEntry = createWineEntry(tastingEntryData?.wineEntry);
-
-    return { playerEntries, wineEntry };
+function createTastingEntry(session) {
+    createPlayerEntry(session);
+    createPlayerEntry(session);
+    createWineEntry(session);
 }
 
-function appendTastingEntry(session, tastingEntry) {
-    session.appendChild(tastingEntry.wineEntry);
-
-    tastingEntry.playerEntries.forEach(entry => {
-        session.appendChild(entry);
-    })
-}
-
-function createWineEntry(wineEntryData) {
+function createWineEntry(session) {
     const wineEntry = document.createElement('div');
     wineEntry.className = 'wineEntry';
     wineEntry.style.border = '2px solid';
@@ -121,21 +92,21 @@ function createWineEntry(wineEntryData) {
     wineEntry.style.flexBasis = '85%';
     wineEntry.style.margin = '15px';
 
-    const wineName = document.createTextNode(wineEntryData?.name ?? 'Viini');
+    const wineName = document.createTextNode('Viini');
     wineEntry.appendChild(wineName);
 
     insertInputEntry('Name: ', wineEntry);
     insertInputEntry('Vuosi ', wineEntry);
-    insertInputEntry('Kuva: T√§h√§n tulee oikeesti kuva ', wineEntry);
+    insertInputEntry('Kuva: T‰h‰n tulee oikeesti kuva ', wineEntry);
     insertInputEntry('Pvm ', wineEntry);
     insertInputEntry('Maa: ', wineEntry);
-    insertInputEntry('Ryp√§leet: ', wineEntry);
+    insertInputEntry('Ryp‰leet: ', wineEntry);
     insertInputEntry('Maut: ', wineEntry);
 
-    return wineEntry;
+    session.appendChild(wineEntry);
 }
 
-function createPlayerEntry() {
+function createPlayerEntry(session) {
     const sessionEntry = document.createElement('div');
     sessionEntry.className = 'sessionEntry';
     sessionEntry.style.border = '2px solid';
@@ -169,10 +140,10 @@ function createPlayerEntry() {
     }
 
     insertInputEntry('Maa: ', sessionEntry);
-    insertInputEntry('Ryp√§leet: ', sessionEntry);
+    insertInputEntry('Ryp‰leet: ', sessionEntry);
     insertInputEntry('Kouluarvosana: ', sessionEntry);
     insertInputEntry('Pisteet: ', sessionEntry);
     insertInputEntry('Comment: ', sessionEntry);
 
-    return sessionEntry;
+    session.appendChild(sessionEntry);
 }
