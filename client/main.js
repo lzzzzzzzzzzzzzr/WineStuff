@@ -1,43 +1,86 @@
-const sessionState = [
+//const currentSession = [
+//    {
+//        wineEntry: {
+//            name: "Viini",
+//            photo: null,
+//            year: 2008,
+//            country: "Italia",
+//            price: 18.99,
+//            date: "date",
+//            winery: "Jokupaikka",
+//            grapes: ["Syrah", "Zinfandel"],
+//            flavors: ["Mustaherukka", "Karpalo", "Tamminen"],
+//            ratings: [8, 7, 8, 9],
+//        },
+//        playerEntries: [
+//            {
+//                name: "A",
+//                flavorGuesses: ["Karpalo", "Karhunvatukka"],
+//                grapes: ["Syrah", "Merlot"],
+//                country: "Espanja",
+//                score: 3,
+//                rating: 8,
+//                priceRating: 7,
+//                priceGuess: 15.00,
+//                comment: "Tämä on viiniä"
+//            },
+//            {
+//                name: "J",
+//                flavorGuesses: ["Karpalo", "Karhunvatukka"],
+//                grapes: ["Syrah", "Merlot"],
+//                country: "Espanja",
+//                score: 3,
+//                rating: 8,
+//                priceRating: 7,
+//                priceGuess: 15.00,
+//                comment: null,
+//            },
+//        ]
+//    }
+//]
+
+const defaultSession = [
     {
         wineEntry: {
-            name: "Viini",
+            name: "",
             photo: null,
-            year: 2008,
-            country: "Italia",
-            price: 18.99,
-            date: "date",
-            winery: "Jokupaikka",
-            grapes: ["Syrah", "Zinfandel"],
-            flavors: ["Mustaherukka", "Karpalo", "Tamminen"],
-            ratings: [8, 7, 8, 9],
+            year: undefined,
+            country: "",
+            price: undefined,
+            date: "",
+            winery: "",
+            grapes: [""],
+            flavors: [""],
+            ratings: [],
         },
         playerEntries: [
             {
-                name: "A",
-                flavorGuesses: ["Karpalo", "Karhunvatukka"],
-                grapes: ["Syrah", "Merlot"],
-                country: "Espanja",
-                score: 3,
-                rating: 8,
-                priceRating: 7,
-                priceGuess: 15.00,
-                comment: "Tämä on viiniä"
+                name: "",
+                flavorGuesses: ["","","","",""],
+                grapes: [""],
+                country: "",
+                score: undefined,
+                rating: undefined,
+                priceRating: undefined,
+                priceGuess: undefined,
+                comment: ""
             },
             {
-                name: "J",
-                flavorGuesses: ["Karpalo", "Karhunvatukka"],
-                grapes: ["Syrah", "Merlot"],
-                country: "Espanja",
-                score: 3,
-                rating: 8,
-                priceRating: 7,
-                priceGuess: 15.00,
-                comment: null,
+                name: "",
+                flavorGuesses: ["", "", "", "", ""],
+                grapes: [""],
+                country: "",
+                score: undefined,
+                rating: undefined,
+                priceRating: undefined,
+                priceGuess: undefined,
+                comment: ""
             },
         ]
     }
 ]
+
+const currentSession = defaultSession;
 
 function createSession() {
     const sessionDiv = document.createElement('div');
@@ -51,17 +94,17 @@ function createSession() {
 
 function renderSession(session) {
     const sessio = document.getElementById('session');
-    sessio.replaceChildren(sessionState.wineEntry);
+    sessio.innerHtml = "";
+    sessio.replaceChildren(session);
+    console.log("Render session");
 }
 
-
 function readSession() {
-    printComments(sessionState);
+    printComments(currentSession);
 }
 
 function updateSession() {
-    console.log('Update');
-    renderSession(sessionState);
+    renderSession(currentSession);
 }
 
 function deleteSession() {
@@ -72,9 +115,8 @@ function deleteSession() {
 function printComments(sessionState) {
     const playerEntries = sessionState[0].playerEntries;
 
-
     playerEntries.forEach(entry => {
-        if (entry.comment !== null) {
+        if (entry.comment !== "") {
             console.log(entry.comment);
         }
     });
