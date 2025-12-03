@@ -1,7 +1,7 @@
-const defaultSession = [
-    {
+function createDefaultSession() {
+    return {
         wineEntry: {
-            name: "",
+            name: "Wine Name",
             photo: null,
             year: "",
             country: "",
@@ -37,9 +37,10 @@ const defaultSession = [
             },
         ]
     }
-]
+}
 
-const currentSession = defaultSession;
+const currentSession = [createDefaultSession()];
+
 
 function createSession() {
     const sessionDiv = document.createElement('div');
@@ -47,25 +48,24 @@ function createSession() {
     sessionDiv.style.display = 'flex';
     sessionDiv.style.flexWrap = 'wrap';
 
+    const newSession = createDefaultSession();
+    currentSession.push(newSession);
+
     const sessionElement = document.getElementById('session');
-    createTastingEntry(defaultSession, sessionElement);
+    createTastingEntry(newSession, sessionElement);
+
+    console.log("sessionItems: " + currentSession.length);
 }
 
 function renderSession(sessionId, elementId) {
     const sessionElement = document.getElementById(elementId);
-
-    //Change values for testing purposes
-    currentSession[0].wineEntry.name = "Paskaviini";
-    currentSession[0].wineEntry.country = "Russia";
-
-    currentSession[0].playerEntries[0].name = "A";
-    currentSession[0].playerEntries[1].name = "J";
 
     sessionElement.innerHTML = '';
 
     sessionItems = sessionId.map((tastingData) => {
         return createTastingEntry(tastingData, sessionElement);
     })
+    console.log("sessionItems: " + currentSession.length);
 }
 
 function readSession() {
@@ -102,8 +102,6 @@ function insertInputEntry(text, entry, content) {
     textInput.style.border = 'none';
     textInput.style.outline = 'none';
 
-   
-
     if (content != undefined) {
         textInput.setAttribute("value", content);
     }
@@ -114,8 +112,8 @@ function insertInputEntry(text, entry, content) {
 }
 
 function createTastingEntry(sessionId, elementId) {
-    createPlayerEntry(sessionId, elementId, 0);
-    createPlayerEntry(sessionId, elementId, 1);
+    createPlayerEntry(sessionId, elementId, 0),
+    createPlayerEntry(sessionId, elementId, 1)
     createWineEntry(sessionId, elementId);
 }
 
@@ -142,6 +140,7 @@ function createWineEntry(sessionId, elementId) {
     insertInputEntry('Maut: ', wineEntry, sessionId.wineEntry.flavors);
 
     elementId.appendChild(wineEntry);
+    return wineEntry;
 }
 
 function createPlayerEntry(sessionId, elementId, playerNumber) {
@@ -184,4 +183,5 @@ function createPlayerEntry(sessionId, elementId, playerNumber) {
     insertInputEntry('Comment: ', playerEntry, sessionId.playerEntries[playerNumber].comment);
 
     elementId.appendChild(playerEntry);
+    return playerEntry;
 }
