@@ -39,7 +39,8 @@ function createDefaultSession() {
     }
 }
 
-const currentSession = [createDefaultSession()];
+/*const currentSession = [createDefaultSession()];*/
+const currentSession = [];
 
 
 function createSession() {
@@ -55,21 +56,33 @@ function createSession() {
     createTastingEntry(newSession, sessionElement);
 
     console.log("sessionItems: " + currentSession.length);
+    renderSession(currentSession, 'session');
 }
 
 function renderSession(sessionId, elementId) {
-    const sessionElement = document.getElementById(elementId);
 
+    const sessionElement = document.getElementById(elementId);
     sessionElement.innerHTML = '';
 
-    sessionItems = sessionId.map((tastingData) => {
-        return createTastingEntry(tastingData, sessionElement);
-    })
-    console.log("sessionItems: " + currentSession.length);
+    if (currentSession.length >= 1) {
+
+        sessionItems = sessionId.map((tastingData) => {
+            return createTastingEntry(tastingData, sessionElement);
+        })
+        console.log("sessionItems: " + currentSession.length);
+    }
+    else {
+        console.log("No sessions to render!");
+    }
 }
 
 function readSession() {
-    printComments(currentSession);
+    if (currentSession.length >= 1) {
+        printComments(currentSession);
+    }
+    else {
+        console.log("No comments to read!");
+    }
 }
 
 function updateSession() {
@@ -77,8 +90,18 @@ function updateSession() {
 }
 
 function deleteSession() {
-    const sessio = document.getElementById('session');
-    sessio.replaceChildren();
+    //const sessio = document.getElementById('session');
+    //sessio.replaceChildren();
+
+    if (currentSession.length == 0) {
+        console.log("No entries to delete!");
+        return;
+    }
+    else {
+        currentSession.pop();
+        console.log("Successfully deleted latest entry.");
+        renderSession(currentSession, 'session');
+    } 
 }
 
 function printComments(sessionState) {
