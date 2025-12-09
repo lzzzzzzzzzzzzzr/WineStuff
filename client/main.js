@@ -101,8 +101,8 @@ function deleteSession() {
     } 
 }
 
-function printComments(sessionState) {
-    const playerEntries = sessionState[0].playerEntries;
+function printComments(currentSession) {
+    const playerEntries = currentSession[0].playerEntries;
 
     playerEntries.forEach(entry => {
         if (entry.comment !== "") {
@@ -130,16 +130,13 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
     if (tastingIndex !== undefined && propertyKey !== undefined) {
         textInput.onchange = (e) => {
             if (playerEntryIndex === undefined || playerEntryIndex === null) {
-                sessionState[tastingIndex].wineEntry[propertyKey] = e.target.value;
+                currentSession[tastingIndex].wineEntry[propertyKey] = e.target.value;
             } else {
-                sessionstate[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
+                currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
             }
         }
-        textInput.onblur = (e) => { renderSession(); }
+        textInput.onblur = (e) => { renderSession(currentSession, 'session'); }
     }
-
-
-   /* console.log(content + " tastingIndex: " + tastingIndex + " ,playerEntryIndex: " + playerEntryIndex);*/
 
     container.appendChild(thisEntry);
     container.appendChild(textInput);
@@ -187,7 +184,7 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
     playerEntry.style.flexBasis = '40%';
     playerEntry.style.margin = '15px';
 
-    const nameEntry = document.createTextNode('Nimi: ' + sessionId.playerEntries[playerIndex].name, null, playerIndex, tastingIndex, 'name');
+    const nameEntry = document.createTextNode('Nimi: ' + sessionId.playerEntries[playerIndex].name, tastingIndex, playerIndex, 'name');
     const textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.style.background = 'transparent';
@@ -211,11 +208,11 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
         playerEntry.appendChild(entry);
     }
 
-    insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, null, playerIndex, tastingIndex, 'country');
-    insertInputEntry('Rypäleet: ', playerEntry, sessionId.playerEntries[playerIndex].grapes, null, playerIndex, tastingIndex, 'grapes');
-    insertInputEntry('Kouluarvosana: ', playerEntry, sessionId.playerEntries[playerIndex].rating, null, playerIndex, tastingIndex, 'rating');
-    insertInputEntry('Pisteet: ', playerEntry, sessionId.playerEntries[playerIndex].score, null, playerIndex, tastingIndex, 'score');
-    insertInputEntry('Comment: ', playerEntry, sessionId.playerEntries[playerIndex].comment, null, playerIndex, tastingIndex, 'comment');
+    insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, tastingIndex, playerIndex, 'country');
+    insertInputEntry('Rypäleet: ', playerEntry, sessionId.playerEntries[playerIndex].grapes, tastingIndex, playerIndex, 'grapes');
+    insertInputEntry('Kouluarvosana: ', playerEntry, sessionId.playerEntries[playerIndex].rating, tastingIndex, playerIndex, 'rating');
+    insertInputEntry('Pisteet: ', playerEntry, sessionId.playerEntries[playerIndex].score, tastingIndex, playerIndex, 'score');
+    insertInputEntry('Comment: ', playerEntry, sessionId.playerEntries[playerIndex].comment, tastingIndex, playerIndex, 'comment');
 
     elementId.appendChild(playerEntry);
     return playerEntry;
