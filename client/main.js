@@ -57,7 +57,7 @@ function createSession() {
 }
 
 function renderSession(sessionId, elementId) {
-
+    console.log("RENDER");
     const sessionElement = document.getElementById(elementId);
     sessionElement.innerHTML = '';
 
@@ -126,7 +126,22 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
         textInput.setAttribute("value", content);
     }
 
-    console.log(content + " tastingIndex: " + tastingIndex + " ,playerEntryIndex: " + playerEntryIndex);
+    //event stuff
+    if (tastingIndex !== undefined && propertyKey !== undefined) {
+        console.log("tastingIndex: " + tastingIndex);
+        textInput.onchange = (e) => {
+            if (playerEntryIndex === undefined || playerEntryIndex === null) {
+                sessionState[tastingIndex].wineEntry[propertyKey] = e.target.value;
+            } else {
+                sessionstate[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
+            }
+        }
+        console.log("tastingIndex: " + tastingIndex);
+        textInput.onblur = (e) => { renderSession(); }
+    }
+
+
+   /* console.log(content + " tastingIndex: " + tastingIndex + " ,playerEntryIndex: " + playerEntryIndex);*/
 
     container.appendChild(thisEntry);
     container.appendChild(textInput);
@@ -134,7 +149,7 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
 }
 
 function createTastingEntry(sessionId, elementId, tastingIndex) {
-    createPlayerEntry(sessionId, elementId, 0),
+    createPlayerEntry(sessionId, elementId, 0, tastingIndex),
     createPlayerEntry(sessionId, elementId, 1)
     createWineEntry(sessionId, elementId, tastingIndex);
 }
@@ -151,21 +166,21 @@ function createWineEntry(sessionId, elementId, tastingIndex) {
     const wineName = document.createTextNode('Viini');
     wineEntry.appendChild(wineName);
 
-    insertInputEntry('Name: ', wineEntry, sessionId.wineEntry.name, tastingIndex, null);
-    insertInputEntry('Vuosi ', wineEntry, sessionId.wineEntry.year, tastingIndex, null);
-    insertInputEntry('Kuva: Tähän tulee oikeesti kuva ', wineEntry, null, tastingIndex, null);
-    insertInputEntry('Pvm ', wineEntry, sessionId.wineEntry.date, tastingIndex, null);
-    insertInputEntry('Maa: ', wineEntry, sessionId.wineEntry.country, tastingIndex, null);
-    insertInputEntry('Tila: ', wineEntry, sessionId.wineEntry.winery, tastingIndex, null);
-    insertInputEntry('Hinta: ', wineEntry, sessionId.wineEntry.price, tastingIndex, null);
-    insertInputEntry('Rypäleet: ', wineEntry, sessionId.wineEntry.grapes, tastingIndex, null);
-    insertInputEntry('Maut: ', wineEntry, sessionId.wineEntry.flavors, tastingIndex, null);
+    insertInputEntry('Name: ', wineEntry, sessionId.wineEntry.name, tastingIndex, null, 'name');
+    insertInputEntry('Vuosi ', wineEntry, sessionId.wineEntry.year, tastingIndex, null, 'year');
+    insertInputEntry('Kuva: Tähän tulee oikeesti kuva ', wineEntry, null, tastingIndex, null, 'photo');
+    insertInputEntry('Pvm ', wineEntry, sessionId.wineEntry.date, tastingIndex, null,'date');
+    insertInputEntry('Maa: ', wineEntry, sessionId.wineEntry.country, tastingIndex, null,'country');
+    insertInputEntry('Tila: ', wineEntry, sessionId.wineEntry.winery, tastingIndex, null, 'winery');
+    insertInputEntry('Hinta: ', wineEntry, sessionId.wineEntry.price, tastingIndex, null, 'price');
+    insertInputEntry('Rypäleet: ', wineEntry, sessionId.wineEntry.grapes, tastingIndex, null, 'grapes');
+    insertInputEntry('Maut: ', wineEntry, sessionId.wineEntry.flavors, tastingIndex, null, 'flavors');
 
     elementId.appendChild(wineEntry);
     return wineEntry;
 }
 
-function createPlayerEntry(sessionId, elementId, playerIndex) {
+function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
     const playerEntry = document.createElement('div');
     playerEntry.className = 'playerEntry';
     playerEntry.style.border = '2px solid';
@@ -174,7 +189,7 @@ function createPlayerEntry(sessionId, elementId, playerIndex) {
     playerEntry.style.flexBasis = '40%';
     playerEntry.style.margin = '15px';
 
-    const nameEntry = document.createTextNode('Nimi: ' + sessionId.playerEntries[playerIndex].name);
+    const nameEntry = document.createTextNode('Nimi: ' + sessionId.playerEntries[playerIndex].name, null, playerIndex, tastingIndex, 'name');
     const textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.style.background = 'transparent';
@@ -198,11 +213,11 @@ function createPlayerEntry(sessionId, elementId, playerIndex) {
         playerEntry.appendChild(entry);
     }
 
-    insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, null, playerIndex);
-    insertInputEntry('Rypäleet: ', playerEntry, sessionId.playerEntries[playerIndex].grapes, null, playerIndex);
-    insertInputEntry('Kouluarvosana: ', playerEntry, sessionId.playerEntries[playerIndex].rating, null, playerIndex);
-    insertInputEntry('Pisteet: ', playerEntry, sessionId.playerEntries[playerIndex].score, null, playerIndex);
-    insertInputEntry('Comment: ', playerEntry, sessionId.playerEntries[playerIndex].comment, null, playerIndex);
+    insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, null, playerIndex, tastingIndex, 'country');
+    insertInputEntry('Rypäleet: ', playerEntry, sessionId.playerEntries[playerIndex].grapes, null, playerIndex, tastingIndex, 'grapes');
+    insertInputEntry('Kouluarvosana: ', playerEntry, sessionId.playerEntries[playerIndex].rating, null, playerIndex, tastingIndex, 'rating');
+    insertInputEntry('Pisteet: ', playerEntry, sessionId.playerEntries[playerIndex].score, null, playerIndex, tastingIndex, 'score');
+    insertInputEntry('Comment: ', playerEntry, sessionId.playerEntries[playerIndex].comment, null, playerIndex, tastingIndex, 'comment');
 
     elementId.appendChild(playerEntry);
     return playerEntry;
