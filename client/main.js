@@ -63,8 +63,8 @@ function renderSession(sessionId, elementId) {
 
     if (currentSession.length >= 1) {
 
-        sessionItems = sessionId.map((tastingData) => {
-            return createTastingEntry(tastingData, sessionElement);
+        sessionItems = sessionId.map((tastingData, tastingIndex) => {
+            return createTastingEntry(tastingData, sessionElement, tastingIndex);
         })
         console.log("sessionItems: " + currentSession.length);
     }
@@ -128,7 +128,6 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
 
     //event stuff
     if (tastingIndex !== undefined && propertyKey !== undefined) {
-        console.log("tastingIndex: " + tastingIndex);
         textInput.onchange = (e) => {
             if (playerEntryIndex === undefined || playerEntryIndex === null) {
                 sessionState[tastingIndex].wineEntry[propertyKey] = e.target.value;
@@ -136,7 +135,6 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
                 sessionstate[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
             }
         }
-        console.log("tastingIndex: " + tastingIndex);
         textInput.onblur = (e) => { renderSession(); }
     }
 
