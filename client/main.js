@@ -1,3 +1,20 @@
+const style = document.createElement('style');
+style.textContent = `
+    #session * {
+        color: white;
+    }
+    #session input {
+        color: white;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+    #session input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+`;
+document.head.appendChild(style);
+
 function createDefaultSession() {
     return {
         wineEntry: {
@@ -15,7 +32,8 @@ function createDefaultSession() {
         playerEntries: [
             {
                 name: "",
-                flavorGuesses: ["","","","",""],
+                flavorGuesses: ["", "", "", "", ""],
+
                 grapes: [""],
                 country: "",
                 score: "",
@@ -27,6 +45,7 @@ function createDefaultSession() {
             {
                 name: "",
                 flavorGuesses: ["", "", "", "", ""],
+
                 grapes: [""],
                 country: "",
                 score: "",
@@ -52,6 +71,8 @@ function createSession() {
     currentSession.push(newSession);
 
     const sessionElement = document.getElementById('session');
+    sessionElement.style.backgroundColor = '464655';
+
     createTastingEntry(newSession, sessionElement, currentSession.length);
     renderSession(currentSession, 'session');
 }
@@ -112,11 +133,10 @@ function printComments(currentSession) {
     return;
 }
 
-function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, propertyKey) {
+function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, propertyKey, arrayIndex = null) {
     const container = document.createElement('div');
     const thisEntry = document.createTextNode(text)
     const textInput = document.createElement('input');
-
     textInput.type = 'text';
     textInput.style.background = 'transparent';
     textInput.style.border = 'none';
@@ -130,14 +150,35 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
     if (tastingIndex !== undefined && propertyKey !== undefined) {
         textInput.onchange = (e) => {
             if (playerEntryIndex === undefined || playerEntryIndex === null) {
-                currentSession[tastingIndex].wineEntry[propertyKey] = e.target.value;
+                if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].wineEntry[propertyKey])) {
+                    currentSession[tastingIndex].wineEntry[propertyKey][arrayIndex] = e.target.value;                 
+                }
+                else {
+                    currentSession[tastingIndex].wineEntry[propertyKey] = e.target.value;
+                }              
             } else {
-                currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
+                console.log(playerEntryIndex);
+                if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey])) {
+                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey][arrayIndex] = e.target.value;
+                }
+                else {
+                    console.log(playerEntryIndex);
+                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
+                }
             }
         }
         textInput.onblur = (e) => { renderSession(currentSession, 'session'); }
-    }
 
+
+        //Log output for testing
+        if (playerEntryIndex !== undefined && playerEntryIndex !== null) {
+            textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey]);
+        }
+        else if (tastingIndex !== undefined && propertyKey !== undefined) {
+            textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].wineEntry[propertyKey]);
+        }
+    }
+    
     container.appendChild(thisEntry);
     container.appendChild(textInput);
     entry.appendChild(container);
@@ -145,7 +186,7 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
 
 function createTastingEntry(sessionId, elementId, tastingIndex) {
     createPlayerEntry(sessionId, elementId, 0, tastingIndex),
-    createPlayerEntry(sessionId, elementId, 1)
+    createPlayerEntry(sessionId, elementId, 1, tastingIndex),
     createWineEntry(sessionId, elementId, tastingIndex);
 }
 
@@ -184,28 +225,16 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
     playerEntry.style.flexBasis = '40%';
     playerEntry.style.margin = '15px';
 
-    const nameEntry = document.createTextNode('Nimi: ' + sessionId.playerEntries[playerIndex].name, tastingIndex, playerIndex, 'name');
     const textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.style.background = 'transparent';
     textInput.style.border = 'none';
     textInput.style.outline = 'none';
 
-    playerEntry.appendChild(nameEntry);
-    playerEntry.appendChild(textInput);
+    insertInputEntry('Nimi: ', playerEntry, sessionId.playerEntries[playerIndex].name, tastingIndex, playerIndex, 'name');
 
     for (let i = 1; i <= 5; i++) {
-        const entry = document.createElement('div');
-
-        const numberText = document.createTextNode(i + '. ');
-        const inputElement = document.createElement('input');
-        inputElement.type = 'text';
-        inputElement.style.background = 'transparent';
-        inputElement.style.border = 'none';
-        inputElement.style.outline = 'none';
-        entry.appendChild(numberText);
-        entry.appendChild(inputElement);
-        playerEntry.appendChild(entry);
+        insertInputEntry(i + ': ', playerEntry, sessionId.playerEntries[playerIndex].flavorGuesses[i], tastingIndex, playerIndex, 'flavorGuesses', i-1);
     }
 
     insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, tastingIndex, playerIndex, 'country');
