@@ -15,51 +15,91 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+//function createDefaultSession() {
+//    return {
+//        wineEntry: {
+//            name: "Wine Name",
+//            photo: null,
+//            year: "",
+//            country: "",
+//            price: "",
+//            date: "",
+//            winery: "",
+//            grapes: [""],
+//            flavors: [""],
+//            ratings: [],
+//        },
+//        playerEntries: [
+//            {
+//                name: "",
+//                flavorGuesses: ["", "", "", "", ""],
+//                grapes: [""],
+//                country: "",
+//                score: "",
+//                rating: "",
+//                priceRating: "",
+//                priceGuess: "",
+//                comment: ""
+//            },
+//            {
+//                name: "",
+//                flavorGuesses: ["", "", "", "", ""],
+//                grapes: [""],
+//                country: "",
+//                score: "",
+//                rating: "",
+//                priceRating: "",
+//                priceGuess: "",
+//                comment: ""
+//            },
+//        ]
+//    }
+//}
+
 function createDefaultSession() {
     return {
         wineEntry: {
-            name: "Wine Name",
+            name: "Piattelli",
             photo: null,
-            year: "",
-            country: "",
-            price: "",
-            date: "",
-            winery: "",
-            grapes: [""],
-            flavors: [""],
+            year: "2023",
+            country: "Argentina",
+            price: "18,46€",
+            date: "10/12/2025",
+            winery: "Cafayate Valley",
+            grapes: ["Cabernet Sauvignon"],
+            flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
             ratings: [],
         },
         playerEntries: [
             {
-                name: "",
-                flavorGuesses: ["", "", "", "", ""],
-
-                grapes: [""],
-                country: "",
-                score: "",
-                rating: "",
-                priceRating: "",
-                priceGuess: "",
+                name: "A",
+                flavorGuesses: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri"],
+                grapes: ["Malbec"],
+                country: "Argentina",
+                score: "4",
+                rating: "7",
+                priceRating: "7",
+                priceGuess: "15",
                 comment: ""
             },
             {
-                name: "",
-                flavorGuesses: ["", "", "", "", ""],
-
-                grapes: [""],
-                country: "",
-                score: "",
-                rating: "",
-                priceRating: "",
+                name: "J",
+                flavorGuesses: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri"],
+                grapes: ["Pinot Noir"],
+                country: "Ranksa",
+                score: "3",
+                rating: "8",
+                priceRating: "8",
                 priceGuess: "",
-                comment: ""
+                comment: "Jees"
             },
         ]
     }
 }
 
-/*const currentSession = [createDefaultSession()];*/
 const currentSession = [];
+
+const allSessions = [];
 
 function createSession() {
     const sessionDiv = document.createElement('div');
@@ -71,7 +111,7 @@ function createSession() {
     currentSession.push(newSession);
 
     const sessionElement = document.getElementById('session');
-    sessionElement.style.backgroundColor = '464655';
+    sessionElement.style.backgroundColor = '#464655';
 
     createTastingEntry(newSession, sessionElement, currentSession.length);
     renderSession(currentSession, 'session');
@@ -81,13 +121,16 @@ function renderSession(sessionId, elementId) {
     console.log("RENDER");
     const sessionElement = document.getElementById(elementId);
     sessionElement.innerHTML = '';
+    sessionElement.id = 'session';
+    sessionElement.style.display = 'flex';
+    sessionElement.style.flexWrap = 'wrap';
+    sessionElement.style.backgroundColor = '#464655';
 
     if (currentSession.length >= 1) {
 
         sessionItems = sessionId.map((tastingData, tastingIndex) => {
             return createTastingEntry(tastingData, sessionElement, tastingIndex);
         })
-        console.log("sessionItems: " + currentSession.length);
     }
     else {
         console.log("No sessions to render!");
@@ -170,13 +213,13 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
         textInput.onblur = (e) => { renderSession(currentSession, 'session'); }
 
 
-        //Log output for testing
-        if (playerEntryIndex !== undefined && playerEntryIndex !== null) {
-            textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey]);
-        }
-        else if (tastingIndex !== undefined && propertyKey !== undefined) {
-            textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].wineEntry[propertyKey]);
-        }
+        ////Log output for testing
+        //if (playerEntryIndex !== undefined && playerEntryIndex !== null) {
+        //    textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey]);
+        //}
+        //else if (tastingIndex !== undefined && propertyKey !== undefined) {
+        //    textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].wineEntry[propertyKey]);
+        //}
     }
     
     container.appendChild(thisEntry);
@@ -233,8 +276,9 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
 
     insertInputEntry('Nimi: ', playerEntry, sessionId.playerEntries[playerIndex].name, tastingIndex, playerIndex, 'name');
 
-    for (let i = 1; i <= 5; i++) {
-        insertInputEntry(i + ': ', playerEntry, sessionId.playerEntries[playerIndex].flavorGuesses[i], tastingIndex, playerIndex, 'flavorGuesses', i-1);
+    for (let i = 0; i < 5; i++) {
+        const num = i + 1;
+        insertInputEntry(num + ': ', playerEntry, sessionId.playerEntries[playerIndex].flavorGuesses[num], tastingIndex, playerIndex, 'flavorGuesses', num);
     }
 
     insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, tastingIndex, playerIndex, 'country');
@@ -245,4 +289,18 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
 
     elementId.appendChild(playerEntry);
     return playerEntry;
+}
+
+function prepareSaveData() {
+    allSessions.length = 0;
+
+    currentSession.forEach(entry => {
+        allSessions.push(JSON.parse(JSON.stringify(entry)));
+        console.log(allSessions);
+    });
+
+    renderSession(currentSession, 'session');
+    return {
+        allSessions: allSessions
+    }
 }
