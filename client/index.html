@@ -3,7 +3,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   <body>
-      <script src="main.js"></script>
+      <script src="main.ts"></script>
+      <script src="save-file-utils.ts"></script>
       <div id="header"
            style="display: flex;
            justify-content: space-between;
@@ -15,23 +16,30 @@
            style="border: 2px solid; border-radius: 1px;">
           <button onclick="createSession()">createSession</button>
       </div>
-      <div id="readSession"
-           style="border: 2px solid; border-radius: 1px;">
-          <button onclick="readSession()">readSession</button>>
-      </div>
       <div id="updateSession"
            style="border: 2px solid; border-radius: 1px;">
           <button onclick="updateSession()">updateSession</button>>
       </div>
+      <div id="saveData"
+           style="border: 2px solid; border-radius: 1px;">
+          <button onclick="saveData()">saveData</button>>
+      </div>
+      <div id="loadData"
+           style="border: 2px solid; border-radius: 1px;">
+          <button onclick="loadData()">LoadData</button>>
+      </div>
       <div id="deleteSession"
            style="border: 2px solid; border-radius: 1px;">
           <button onclick="deleteSession()">deleteSession</button>>
+      </div>
+      <div id="deleteData"
+           style="border: 2px solid; border-radius: 1px;">
+          <button onclick="clearSavedData()">Delete Saved Data</button>>
       </div>
       <div id="session"
            style="display: flex; flex-wrap: wrap;">
           <div class="playerEntry"></div>
           <div class="wineEntry"></div>
       </div>
-
   </body>
 </html>
