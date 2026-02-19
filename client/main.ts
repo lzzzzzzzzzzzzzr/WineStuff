@@ -128,7 +128,7 @@ function renderSession(sessionId, elementId) {
 
     if (currentSession.length >= 1) {
 
-        sessionItems = sessionId.map((tastingData, tastingIndex) => {
+        let sessionItems = sessionId.map((tastingData, tastingIndex) => {
             return createTastingEntry(tastingData, sessionElement, tastingIndex);
         })
     }
@@ -184,6 +184,10 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
     textInput.style.background = 'transparent';
     textInput.style.border = 'none';
     textInput.style.outline = 'none';
+    container.style.display = 'flex';
+    container.style.gap = '8px';
+    textInput.style.width = '100%';
+    textInput.maxLength = 30;
 
     if (content != undefined) {
         textInput.setAttribute("value", content);
@@ -192,34 +196,27 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
     //event stuff
     if (tastingIndex !== undefined && propertyKey !== undefined) {
         textInput.onchange = (e) => {
+
+            if (!(e.currentTarget instanceof HTMLInputElement)) return
             if (playerEntryIndex === undefined || playerEntryIndex === null) {
                 if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].wineEntry[propertyKey])) {
-                    currentSession[tastingIndex].wineEntry[propertyKey][arrayIndex] = e.target.value;                 
+                    currentSession[tastingIndex].wineEntry[propertyKey][arrayIndex] = e.currentTarget.value;
                 }
                 else {
-                    currentSession[tastingIndex].wineEntry[propertyKey] = e.target.value;
-                }              
+                    currentSession[tastingIndex].wineEntry[propertyKey] = e.currentTarget.value;
+                }
             } else {
                 console.log(playerEntryIndex);
                 if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey])) {
-                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey][arrayIndex] = e.target.value;
+                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey][arrayIndex] = e.currentTarget.value;
                 }
                 else {
                     console.log(playerEntryIndex);
-                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
+                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.currentTarget.value;
                 }
             }
         }
         textInput.onblur = (e) => { renderSession(currentSession, 'session'); }
-
-
-        ////Log output for testing
-        //if (playerEntryIndex !== undefined && playerEntryIndex !== null) {
-        //    textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey]);
-        //}
-        //else if (tastingIndex !== undefined && propertyKey !== undefined) {
-        //    textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].wineEntry[propertyKey]);
-        //}
     }
     
     container.appendChild(thisEntry);
