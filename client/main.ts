@@ -200,7 +200,6 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
             if (!(e.currentTarget instanceof HTMLInputElement)) return
             if (playerEntryIndex === undefined || playerEntryIndex === null) {
                 if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].wineEntry[propertyKey])) {
-<<<<<<< HEAD:client/main.ts
                     currentSession[tastingIndex].wineEntry[propertyKey][arrayIndex] = e.currentTarget.value;
                 }
                 else {
@@ -214,37 +213,10 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
                 else {
                     console.log(playerEntryIndex);
                     currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.currentTarget.value;
-=======
-                    currentSession[tastingIndex].wineEntry[propertyKey][arrayIndex] = e.target.value;                 
-                }
-                else {
-                    currentSession[tastingIndex].wineEntry[propertyKey] = e.target.value;
-                }              
-            } else {
-                console.log(playerEntryIndex);
-                if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey])) {
-                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey][arrayIndex] = e.target.value;
-                }
-                else {
-                    console.log(playerEntryIndex);
-                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.target.value;
->>>>>>> main:client/main.js
                 }
             }
         }
         textInput.onblur = (e) => { renderSession(currentSession, 'session'); }
-<<<<<<< HEAD:client/main.ts
-=======
-
-
-        ////Log output for testing
-        //if (playerEntryIndex !== undefined && playerEntryIndex !== null) {
-        //    textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey]);
-        //}
-        //else if (tastingIndex !== undefined && propertyKey !== undefined) {
-        //    textInput.onblur = (e) => console.log("Blur:" + currentSession[tastingIndex].wineEntry[propertyKey]);
-        //}
->>>>>>> main:client/main.js
     }
     
     container.appendChild(thisEntry);
