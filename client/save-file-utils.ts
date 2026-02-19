@@ -48,3 +48,7 @@ function clearSavedData() {
         alert('All data has been removed!');
     }
 }
+
+window.saveData = saveData;
+window.loadData = loadData;
+window.deleteData = deleteData;

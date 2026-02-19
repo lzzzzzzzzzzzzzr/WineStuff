@@ -301,3 +301,7 @@ function prepareSaveData() {
         allSessions: allSessions
     }
 }
+
+window.createSession = createSession;
+window.updateSession = updateSession;
+window.deleteSession = deleteSession;
