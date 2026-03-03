@@ -1,3 +1,13 @@
+document.querySelector('#save-data-button').addEventListener('click', saveData)
+
+
+
+import { prepareSaveData } from './main';
+import { renderSession } from './main';
+import {
+    WineEntry,
+    PlayerEntry,
+} from './types';
 function saveData() {
     try {
         const dataToSave = prepareSaveData();
@@ -11,7 +21,7 @@ function saveData() {
     }
 }
 
-function loadData() {
+export function loadData(allSessions, currentSession, renderSession) {
     try {
         const savedData = localStorage.getItem('wineData');
 
@@ -49,6 +59,6 @@ function clearSavedData() {
     }
 }
 
-window.saveData = saveData;
-window.loadData = loadData;
-window.deleteData = deleteData;
+//window.saveData = saveData;
+//window.loadData = loadData;
+//window.clearSavedData = clearSavedData;

@@ -1,3 +1,11 @@
+import { loadData } from "./save-file-utils";
+
+document.querySelector('#create-session-button').addEventListener('click', createSession)
+document.querySelector('#update-session-button').addEventListener('click', updateSession)
+
+document.querySelector('#delete-session-button').addEventListener('click', deleteSession)
+document.querySelector('#load-data-button').addEventListener('click', () => loadData(allSessions, currentSession, renderSession))
+
 const style = document.createElement('style');
 style.textContent = `
     #session * {
@@ -56,6 +64,8 @@ document.head.appendChild(style);
 //    }
 //}
 
+
+
 function createDefaultSession() {
     return {
         wineEntry: {
@@ -102,6 +112,11 @@ const currentSession = [];
 const allSessions = [];
 
 function createSession() {
+    const add = (a: number, b: number): number => {
+        return a + b
+    }
+    console.log(add(5, 8)) // should print 13 when page loads
+
     const sessionDiv = document.createElement('div');
     sessionDiv.id = 'session';
     sessionDiv.style.display = 'flex';
@@ -117,7 +132,7 @@ function createSession() {
     renderSession(currentSession, 'session');
 }
 
-function renderSession(sessionId, elementId) {
+export function renderSession(sessionId, elementId) {
     console.log("RENDER");
     const sessionElement = document.getElementById(elementId);
     sessionElement.innerHTML = '';
@@ -288,7 +303,7 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
     return playerEntry;
 }
 
-function prepareSaveData() {
+export function prepareSaveData() {
     allSessions.length = 0;
 
     currentSession.forEach(entry => {
@@ -302,6 +317,6 @@ function prepareSaveData() {
     }
 }
 
-window.createSession = createSession;
-window.updateSession = updateSession;
-window.deleteSession = deleteSession;
+//window.createSession = createSession;
+//window.updateSession = updateSession;
+//window.deleteSession = deleteSession;
