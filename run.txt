@@ -1,1 +1,0 @@
-bun --hot client/index.html

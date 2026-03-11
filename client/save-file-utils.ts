@@ -4,6 +4,7 @@ document.querySelector('#save-data-button').addEventListener('click', saveData)
 
 import { prepareSaveData } from './main';
 import { renderSession } from './main';
+import { isWineTasted } from './sessionData';
 import {
     WineEntry,
     PlayerEntry,
@@ -44,6 +45,10 @@ export function loadData(allSessions, currentSession, renderSession) {
         });
         
         renderSession(currentSession, 'session');
+
+        console.log("AllSessions: " + allSessions);
+        console.log("CurrentSession: " + allSessions);
+        isWineTasted('Piattelli', allSessions);
 
         return true;
     } catch (error) {

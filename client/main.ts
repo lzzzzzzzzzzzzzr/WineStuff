@@ -1,4 +1,5 @@
 import { loadData } from "./save-file-utils";
+import { isWineTasted } from "./sessionData";
 
 document.querySelector('#create-session-button').addEventListener('click', createSession)
 document.querySelector('#update-session-button').addEventListener('click', updateSession)
@@ -111,6 +112,8 @@ const currentSession = [];
 
 const allSessions = [];
 
+createDefaultSession();
+
 function createSession() {
     const add = (a: number, b: number): number => {
         return a + b
@@ -141,7 +144,7 @@ export function renderSession(sessionId, elementId) {
     sessionElement.style.flexWrap = 'wrap';
     sessionElement.style.backgroundColor = '#464655';
 
-    if (currentSession.length >= 1) {
+    if (sessionId.length >= 1) {
 
         let sessionItems = sessionId.map((tastingData, tastingIndex) => {
             return createTastingEntry(tastingData, sessionElement, tastingIndex);
@@ -231,7 +234,7 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
                 }
             }
         }
-        textInput.onblur = (e) => { renderSession(currentSession, 'session'); }
+/*        textInput.onblur = (e) => { renderSession(currentSession, 'session'); }*/
     }
     
     container.appendChild(thisEntry);
