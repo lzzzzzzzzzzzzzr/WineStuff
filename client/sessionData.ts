@@ -39,29 +39,36 @@ const testWineEntries = [
     },
 ]
 
-console.log(isWineTasted('Viini 3', testWineEntries))
+console.log(isWineTasted('Viini 2', testWineEntries))
+console.log(filterByWineName('Piattelli', testWineEntries));
+console.log("Last Entry");
+console.log(getLatestWineEntry);
+
+//function getAllWineEntries(allSessions: Session[]): WineEntry[] {
+//    //Stuff
+
+//    return wineEntries;
+//}
 
 export function isWineTasted(wineName: string, allWineEntries: WineEntry[]): boolean {
 
-    /*return allWineEntries.some(entry => entry.name === wineName);*/
-
-    //const wineNames = allWineEntries.map(function (entry) {
-    //    console.log("Checking entry: ", entry.name);
-    //    return entry.name === wineName;
-    //}
-
     return allWineEntries.some(function (entry) {
         console.log("Checking entry: ", entry.name);
+        console.log(entry.name + " = " + wineName);
         return entry.name === wineName;
     });
 }
 
-//export function filterByWineName(wineName: string, allWineEntries: WineEntry[]): WineEntry[] {
+export function filterByWineName(wineName: string, allWineEntries: WineEntry[]): WineEntry[] {
 
-//    function matchName((allWineEntries.forEach())
-//    const result = allWineEntries.filter(wineName) => testWineEntries.
+    const filteredSession = allWineEntries.filter(entry => entry.name === wineName);
 
-//    }
-//    return []
-//}
+    return filteredSession;
+}
 
+export function getLatestWineEntry(allWineEntries: WineEntry[]) {
+
+    const lastEntry = allWineEntries[allWineEntries.length - 1]
+
+    return lastEntry;
+}

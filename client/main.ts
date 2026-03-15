@@ -1,5 +1,5 @@
 import { loadData } from "./save-file-utils";
-import { isWineTasted } from "./sessionData";
+import { filterByWineName, isWineTasted } from "./sessionData";
 
 document.querySelector('#create-session-button').addEventListener('click', createSession)
 document.querySelector('#update-session-button').addEventListener('click', updateSession)
@@ -113,6 +113,10 @@ const currentSession = [];
 const allSessions = [];
 
 createDefaultSession();
+
+//filterByWineName test
+currentSession.pop();
+currentSession.push(filterByWineName('Piattelli', allSessions));
 
 function createSession() {
     const add = (a: number, b: number): number => {
