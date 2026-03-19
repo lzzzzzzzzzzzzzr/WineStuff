@@ -1,0 +1,12 @@
+// Get latest entry from an array of wine entries
+function getLatestWineEntry(entries: WineEntry[]): WineEntry {
+  // hint: entries.reduce(...)
+  // it's useful to see how "select largest value" or "sum all values" for an array is done with reduce
+  return {}
+}
+
+// Collect entries from all sessions into a single array
+function getAllWineEntries(allSessions: Session[]): WineEntry[] {
+  // hint: wineEntries = allSessions.flatMap(...)
+  return [] 
+}
