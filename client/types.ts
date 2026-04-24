@@ -22,3 +22,9 @@ export interface PlayerEntry {
     priceGuess: string;
     comment: string;
 }
+
+export interface Session {
+    wineEntries: WineEntry[];
+    playerEntry1: PlayerEntry[];
+    playerEntry2: PlayerEntry[];
+}

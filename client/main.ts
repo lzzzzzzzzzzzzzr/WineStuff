@@ -1,5 +1,7 @@
 import { loadData } from "./save-file-utils";
 import { filterByWineName, isWineTasted } from "./sessionData";
+import { getAllWineEntries } from "./sessionData";
+import { Session } from "./types";
 
 document.querySelector('#create-session-button').addEventListener('click', createSession)
 document.querySelector('#update-session-button').addEventListener('click', updateSession)
@@ -23,100 +25,90 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
-//function createDefaultSession() {
-//    return {
-//        wineEntry: {
-//            name: "Wine Name",
-//            photo: null,
-//            year: "",
-//            country: "",
-//            price: "",
-//            date: "",
-//            winery: "",
-//            grapes: [""],
-//            flavors: [""],
-//            ratings: [],
-//        },
-//        playerEntries: [
-//            {
-//                name: "",
-//                flavorGuesses: ["", "", "", "", ""],
-//                grapes: [""],
-//                country: "",
-//                score: "",
-//                rating: "",
-//                priceRating: "",
-//                priceGuess: "",
-//                comment: ""
-//            },
-//            {
-//                name: "",
-//                flavorGuesses: ["", "", "", "", ""],
-//                grapes: [""],
-//                country: "",
-//                score: "",
-//                rating: "",
-//                priceRating: "",
-//                priceGuess: "",
-//                comment: ""
-//            },
-//        ]
-//    }
-//}
-
-
-
-function createDefaultSession() {
+function createDefaultSession(): Session {
     return {
-        wineEntry: {
-            name: "Piattelli",
-            photo: null,
-            year: "2023",
-            country: "Argentina",
-            price: "18,46€",
-            date: "10/12/2025",
-            winery: "Cafayate Valley",
-            grapes: ["Cabernet Sauvignon"],
-            flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
-            ratings: [],
-        },
-        playerEntries: [
+        wineEntries: [
+            {
+                name: "Piattelli",
+                photo: null,
+                year: "2023",
+                country: "Argentina",
+                price: "18,46€",
+                date: "10/12/2025",
+                winery: "Cafayate Valley",
+                grapes: ["Cabernet Sauvignon"],
+                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
+                ratings: [],
+            },
+        {
+                name: "Piattelli2",
+                photo: null,
+                year: "2023",
+                country: "Argentina",
+                price: "18,46€",
+                date: "10/12/2025",
+                winery: "Cafayate Valley",
+                grapes: ["Cabernet Sauvignon"],
+                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
+                ratings: [],
+            },
+{
+                name: "Piattelli3",
+                photo: null,
+                year: "2023",
+                country: "Argentina",
+                price: "18,46€",
+                date: "10/12/2025",
+                winery: "Cafayate Valley",
+                grapes: ["Cabernet Sauvignon"],
+                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
+                ratings: [],
+            },
+{
+                name: "Piattelli4",
+                photo: null,
+                year: "2023",
+                country: "Argentina",
+                price: "18,46€",
+                date: "10/12/2025",
+                winery: "Cafayate Valley",
+                grapes: ["Cabernet Sauvignon"],
+                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
+                ratings: [],
+            }        ],
+        playerEntry1: [
             {
                 name: "A",
                 flavorGuesses: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri"],
                 grapes: ["Malbec"],
                 country: "Argentina",
-                score: "4",
-                rating: "7",
+                score: 3,
+                rating: 7,
                 priceRating: "7",
                 priceGuess: "15",
                 comment: ""
-            },
+            }],
+        playerEntry2: [
             {
                 name: "J",
                 flavorGuesses: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri"],
                 grapes: ["Pinot Noir"],
                 country: "Ranksa",
-                score: "3",
-                rating: "8",
+                score: 3,
+                rating: 8,
                 priceRating: "8",
                 priceGuess: "",
                 comment: "Jees"
-            },
-        ]
+            }]
+        } 
+
     }
-}
 
 const currentSession = [];
 
-const allSessions = [];
+const allSessions: Session[] = [createDefaultSession(), createDefaultSession(), createDefaultSession()];
 
-createDefaultSession();
-
-//filterByWineName test
-currentSession.pop();
-currentSession.push(filterByWineName('Piattelli', allSessions));
+getAllWineEntries(allSessions);
 
 function createSession() {
     const add = (a: number, b: number): number => {
