@@ -1,13 +1,11 @@
-document.querySelector('#save-data-button').addEventListener('click', saveData)
-
-
+﻿document.querySelector('#save-data-button').addEventListener('click', saveData)
 
 import { prepareSaveData } from './main';
-import { renderSession } from './main';
 import { isWineTasted } from './sessionData';
 import {
     WineEntry,
     PlayerEntry,
+    WineProperties,
 } from './types';
 function saveData() {
     try {
@@ -16,6 +14,47 @@ function saveData() {
         localStorage.setItem('wineData', JSON.stringify(dataToSave));
         return true;
 
+    } catch (error) {
+        alert(error);
+        return false;
+    }
+}
+
+export function saveWinePropertyData(wineProperties) {
+    try {
+        const dataToSave = wineProperties;
+
+        localStorage.setItem('winePropertyData', JSON.stringify(dataToSave));
+        return true;
+
+    } catch (error) {
+        alert(error);
+        return false;
+    }
+}
+
+export function loadWinePropertyData(): WineProperties | false {
+
+    try {
+        const savedData = localStorage.getItem('winePropertyData');
+
+        if (!savedData) {
+            alert('No saved wineProperty data found!');
+            return false;
+        }
+        const parsedData = JSON.parse(savedData);
+
+        if (
+            !Array.isArray(parsedData.wineFlavors) ||
+            !Array.isArray(parsedData.wineGrapes)
+        ) {
+            throw new Error(
+                'Invalid data format: wineFlavors or wineGrapes missing or not an array'
+            );
+        }
+        console.log("Loaded data: ");
+        console.log(parsedData);
+        return parsedData as WineProperties;
     } catch (error) {
         alert(error);
         return false;
@@ -63,6 +102,7 @@ function clearSavedData() {
         alert('All data has been removed!');
     }
 }
+
 
 //window.saveData = saveData;
 //window.loadData = loadData;

@@ -28,3 +28,8 @@ export interface Session {
     playerEntry1: PlayerEntry[];
     playerEntry2: PlayerEntry[];
 }
+
+export interface WineProperties {
+    wineFlavors: string[];
+    wineGrapes: string[];
+}
