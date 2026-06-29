@@ -1,7 +1,7 @@
 import { loadData } from "./save-file-utils";
 import { filterByWineName, isWineTasted } from "./sessionData";
 import { getAllWineEntries } from "./sessionData";
-import { Session } from "./types";
+import { PlayerEntry, Session, Tasting } from "./types";
 
 document.querySelector('#create-session-button').addEventListener('click', createSession)
 document.querySelector('#update-session-button').addEventListener('click', updateSession)
@@ -25,9 +25,9 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-function createDefaultSession(): Session {
+function createDefaultSession(): Tasting {
     return {
-        wineEntries: [
+        wineEntry: [
             {
                 name: "Piattelli",
                 photo: null,
@@ -39,47 +39,11 @@ function createDefaultSession(): Session {
                 grapes: ["Cabernet Sauvignon"],
                 flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
                 ratings: [],
-            },
-        {
-                name: "Piattelli2",
-                photo: null,
-                year: "2023",
-                country: "Argentina",
-                price: "18,46€",
-                date: "10/12/2025",
-                winery: "Cafayate Valley",
-                grapes: ["Cabernet Sauvignon"],
-                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
-                ratings: [],
-            },
-{
-                name: "Piattelli3",
-                photo: null,
-                year: "2023",
-                country: "Argentina",
-                price: "18,46€",
-                date: "10/12/2025",
-                winery: "Cafayate Valley",
-                grapes: ["Cabernet Sauvignon"],
-                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
-                ratings: [],
-            },
-{
-                name: "Piattelli4",
-                photo: null,
-                year: "2023",
-                country: "Argentina",
-                price: "18,46€",
-                date: "10/12/2025",
-                winery: "Cafayate Valley",
-                grapes: ["Cabernet Sauvignon"],
-                flavors: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri, tammi"],
-                ratings: [],
-            }        ],
+            }],
         playerEntry1: [
             {
                 name: "A",
-                flavorGuesses: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri"],
+                flavorGuesses: ["Mustaherukka", "tumma kirsikka", "karhunvatukka", "tummasuklaa", "mustapippuri"],
                 grapes: ["Malbec"],
                 country: "Argentina",
                 score: 3,
@@ -91,7 +55,7 @@ function createDefaultSession(): Session {
         playerEntry2: [
             {
                 name: "J",
-                flavorGuesses: ["Mustaherukka, tumma kirsikka, karhunvatukka, tummasuklaa, mustapippuri"],
+                flavorGuesses: ["Mustaherukka", "tumma kirsikka", "karhunvatukka", "tummasuklaa", "mustapippuri"],
                 grapes: ["Pinot Noir"],
                 country: "Ranksa",
                 score: 3,
@@ -101,12 +65,11 @@ function createDefaultSession(): Session {
                 comment: "Jees"
             }]
         } 
-
     }
 
-const currentSession = [];
+const currentSession: Tasting[] = [];
 
-const allSessions: Session[] = [createDefaultSession(), createDefaultSession(), createDefaultSession()];
+const allSessions: Tasting[] = [createDefaultSession(), createDefaultSession(), createDefaultSession()];
 
 getAllWineEntries(allSessions);
 
@@ -131,8 +94,8 @@ function createSession() {
     renderSession(currentSession, 'session');
 }
 
-export function renderSession(sessionId, elementId) {
-    console.log("RENDER");
+export function renderSession(sessionId, elementId: string) {
+    console.log("RENDER" + sessionId);
     const sessionElement = document.getElementById(elementId);
     sessionElement.innerHTML = '';
     sessionElement.id = 'session';
@@ -178,7 +141,7 @@ function deleteSession() {
         renderSession(currentSession, 'session');
     } 
 }
-
+//TODO: Rework for the 2 player tasting system
 function printComments(currentSession) {
     const playerEntries = currentSession[0].playerEntries;
 
@@ -190,7 +153,7 @@ function printComments(currentSession) {
     return;
 }
 
-function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, propertyKey, arrayIndex = null) {
+function insertInputEntry(text: string, entry: HTMLElement, content, tastingIndex: number, playerEntryIndex, propertyKey: string, arrayIndex = null) {
     const container = document.createElement('div');
     const thisEntry = document.createTextNode(text)
     const textInput = document.createElement('input');
@@ -210,23 +173,34 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
     //event stuff
     if (tastingIndex !== undefined && propertyKey !== undefined) {
         textInput.onchange = (e) => {
-
+            console.log("Onchange! " + playerEntryIndex);
             if (!(e.currentTarget instanceof HTMLInputElement)) return
             if (playerEntryIndex === undefined || playerEntryIndex === null) {
-                if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].wineEntry[propertyKey])) {
-                    currentSession[tastingIndex].wineEntry[propertyKey][arrayIndex] = e.currentTarget.value;
+                if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].wineEntry[0][propertyKey])) {
+                    currentSession[tastingIndex].wineEntry[0][propertyKey][arrayIndex] = e.currentTarget.value;
                 }
                 else {
-                    currentSession[tastingIndex].wineEntry[propertyKey] = e.currentTarget.value;
+                    currentSession[tastingIndex].wineEntry[0][propertyKey] = e.currentTarget.value;
                 }
             } else {
-                console.log(playerEntryIndex);
-                if (arrayIndex !== null && Array.isArray(currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey])) {
-                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey][arrayIndex] = e.currentTarget.value;
+
+                let player: PlayerEntry;
+                if (playerEntryIndex == 1) {
+                    player = currentSession[tastingIndex].playerEntry1[0];
+                }
+                else if (playerEntryIndex == 2) {
+                    player = currentSession[tastingIndex].playerEntry2[0];
                 }
                 else {
-                    console.log(playerEntryIndex);
-                    currentSession[tastingIndex].playerEntries[playerEntryIndex][propertyKey] = e.currentTarget.value;
+                    throw new Error('playerIndex out of bounds')
+                }
+
+                console.log("PlayerEntryIndex: " + playerEntryIndex);
+                if (arrayIndex !== null && Array.isArray(player[propertyKey])) {
+                    player[propertyKey][arrayIndex] = e.currentTarget.value;
+                }
+                else {
+                    player[propertyKey] = e.currentTarget.value;
                 }
             }
         }
@@ -238,13 +212,13 @@ function insertInputEntry(text, entry, content, tastingIndex, playerEntryIndex, 
     entry.appendChild(container);
 }
 
-function createTastingEntry(sessionId, elementId, tastingIndex) {
-    createPlayerEntry(sessionId, elementId, 0, tastingIndex),
+function createTastingEntry(sessionId: Tasting, elementId: HTMLElement, tastingIndex: number) {
     createPlayerEntry(sessionId, elementId, 1, tastingIndex),
+    createPlayerEntry(sessionId, elementId, 2, tastingIndex),
     createWineEntry(sessionId, elementId, tastingIndex);
 }
 
-function createWineEntry(sessionId, elementId, tastingIndex) {
+function createWineEntry(sessionId: Tasting, elementId: HTMLElement, tastingIndex: number) {
     const wineEntry = document.createElement('div');
     wineEntry.className = 'wineEntry';
     wineEntry.style.border = '2px solid';
@@ -256,21 +230,39 @@ function createWineEntry(sessionId, elementId, tastingIndex) {
     const wineName = document.createTextNode('Viini');
     wineEntry.appendChild(wineName);
 
-    insertInputEntry('Name: ', wineEntry, sessionId.wineEntry.name, tastingIndex, null, 'name');
-    insertInputEntry('Vuosi ', wineEntry, sessionId.wineEntry.year, tastingIndex, null, 'year');
+    const wine = sessionId.wineEntry[0];
+
+    insertInputEntry('Name: ', wineEntry, wine.name, tastingIndex, null, 'name');
+    insertInputEntry('Vuosi ', wineEntry, wine.year, tastingIndex, null, 'year');
     insertInputEntry('Kuva: Tähän tulee oikeesti kuva ', wineEntry, null, tastingIndex, null, 'photo');
-    insertInputEntry('Pvm ', wineEntry, sessionId.wineEntry.date, tastingIndex, null,'date');
-    insertInputEntry('Maa: ', wineEntry, sessionId.wineEntry.country, tastingIndex, null,'country');
-    insertInputEntry('Tila: ', wineEntry, sessionId.wineEntry.winery, tastingIndex, null, 'winery');
-    insertInputEntry('Hinta: ', wineEntry, sessionId.wineEntry.price, tastingIndex, null, 'price');
-    insertInputEntry('Rypäleet: ', wineEntry, sessionId.wineEntry.grapes, tastingIndex, null, 'grapes');
-    insertInputEntry('Maut: ', wineEntry, sessionId.wineEntry.flavors, tastingIndex, null, 'flavors');
+    insertInputEntry('Pvm ', wineEntry, wine.date, tastingIndex, null,'date');
+    insertInputEntry('Maa: ', wineEntry, wine.country, tastingIndex, null,'country');
+    insertInputEntry('Tila: ', wineEntry, wine.winery, tastingIndex, null, 'winery');
+    insertInputEntry('Hinta: ', wineEntry, wine.price, tastingIndex, null, 'price');
+    insertInputEntry('Rypäleet: ', wineEntry, wine.grapes, tastingIndex, null, 'grapes');
+    insertInputEntry('Maut: ', wineEntry, wine.flavors[0], tastingIndex, null, 'flavors', 0);
 
     elementId.appendChild(wineEntry);
     return wineEntry;
 }
 
-function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
+
+function getPlayerEntry(sessionId: Tasting, playerIndex: number): PlayerEntry[] {
+    if (playerIndex == 1) {
+        return sessionId.playerEntry1;
+    }
+    else if (playerIndex == 2) {
+        return sessionId.playerEntry2;
+    }
+    else {
+        throw new Error('playerIndex out of bounds')
+    }
+}
+
+function createPlayerEntry(sessionId: Tasting, elementId: HTMLElement, playerIndex: number, tastingIndex: number) {
+
+    let sessionPlayerEntry = getPlayerEntry(sessionId, playerIndex);
+
     const playerEntry = document.createElement('div');
     playerEntry.className = 'playerEntry';
     playerEntry.style.border = '2px solid';
@@ -285,18 +277,18 @@ function createPlayerEntry(sessionId, elementId, playerIndex, tastingIndex) {
     textInput.style.border = 'none';
     textInput.style.outline = 'none';
 
-    insertInputEntry('Nimi: ', playerEntry, sessionId.playerEntries[playerIndex].name, tastingIndex, playerIndex, 'name');
+    insertInputEntry('Nimi: ', playerEntry, sessionPlayerEntry[0].name, tastingIndex, playerIndex, 'name');
 
     for (let i = 0; i < 5; i++) {
         const num = i + 1;
-        insertInputEntry(num + ': ', playerEntry, sessionId.playerEntries[playerIndex].flavorGuesses[num], tastingIndex, playerIndex, 'flavorGuesses', num);
+        insertInputEntry(num + ': ', playerEntry, sessionPlayerEntry[0].flavorGuesses[i], tastingIndex, playerIndex, 'flavorGuesses', i);
     }
 
-    insertInputEntry('Maa: ', playerEntry, sessionId.playerEntries[playerIndex].country, tastingIndex, playerIndex, 'country');
-    insertInputEntry('Rypäleet: ', playerEntry, sessionId.playerEntries[playerIndex].grapes, tastingIndex, playerIndex, 'grapes');
-    insertInputEntry('Kouluarvosana: ', playerEntry, sessionId.playerEntries[playerIndex].rating, tastingIndex, playerIndex, 'rating');
-    insertInputEntry('Pisteet: ', playerEntry, sessionId.playerEntries[playerIndex].score, tastingIndex, playerIndex, 'score');
-    insertInputEntry('Comment: ', playerEntry, sessionId.playerEntries[playerIndex].comment, tastingIndex, playerIndex, 'comment');
+    insertInputEntry('Maa: ', playerEntry, sessionPlayerEntry[0].country, tastingIndex, playerIndex, 'country');
+    insertInputEntry('Rypäleet: ', playerEntry, sessionPlayerEntry[0].grapes, tastingIndex, playerIndex, 'grapes');
+    insertInputEntry('Kouluarvosana: ', playerEntry, sessionPlayerEntry[0].rating, tastingIndex, playerIndex, 'rating');
+    insertInputEntry('Pisteet: ', playerEntry, sessionPlayerEntry[0].score, tastingIndex, playerIndex, 'score');
+    insertInputEntry('Comment: ', playerEntry, sessionPlayerEntry[0].comment, tastingIndex, playerIndex, 'comment');
 
     elementId.appendChild(playerEntry);
     return playerEntry;

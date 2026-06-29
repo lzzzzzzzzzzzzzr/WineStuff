@@ -85,8 +85,8 @@ export function loadData(allSessions, currentSession, renderSession) {
         
         renderSession(currentSession, 'session');
 
-        console.log("AllSessions: " + allSessions);
-        console.log("CurrentSession: " + allSessions);
+        //console.log("AllSessions: " + allSessions);
+        //console.log("CurrentSession: " + allSessions);
         isWineTasted('Piattelli', allSessions);
 
         return true;

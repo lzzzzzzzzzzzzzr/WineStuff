@@ -1,5 +1,0 @@
-// Collect entries from all sessions into a single array
-function getAllWineEntries(allSessions: Session[]): WineEntry[] {
-  // hint: wineEntries = allSessions.flatMap(...)
-  return [] 
-}

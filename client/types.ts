@@ -23,10 +23,15 @@ export interface PlayerEntry {
     comment: string;
 }
 
-export interface Session {
-    wineEntries: WineEntry[];
+//Each wine has a Tasting with 2 players
+export interface Tasting {
+    wineEntry: WineEntry[];
     playerEntry1: PlayerEntry[];
     playerEntry2: PlayerEntry[];
+}
+//Session is made of up any number of Tastings
+export interface Session {
+    tastingEntries: Tasting[]
 }
 
 export interface WineProperties {

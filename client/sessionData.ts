@@ -1,5 +1,5 @@
 import { WineEntry } from "./types";
-import { Session } from "./types";
+import { Tasting } from "./types";
 
 const testWineEntries = [
     {
@@ -52,12 +52,10 @@ export function isWineTasted(wineName: string, allWineEntries: WineEntry[]): boo
 export function filterByWineName(wineName: string, allWineEntries: WineEntry[]): WineEntry[] {
 
     const filteredSession = allWineEntries.filter(entry => entry.name === wineName);
-
-
     return filteredSession;
 }
 
-export function getLatestWineEntry(allWineEntries: WineEntry[]) {
+export function getLatestWineEntry(allWineEntries: WineEntry[]): WineEntry{
 
     const latestEntry = allWineEntries.reduce(compareDate, allWineEntries[0]);
 
@@ -75,9 +73,14 @@ export function getLatestWineEntry(allWineEntries: WineEntry[]) {
     return latestEntry;
 }
 
-export function getAllWineEntries(allSessions: Session[]): WineEntry[] {
-    const allWines = allSessions.map(session => session.wineEntries).flat();
+export function getAllWineEntries(allSessions: Tasting[]): WineEntry[] {
+    const allWines = allSessions.map(session => session.wineEntry).flat();
     console.log("AllWines");
     console.log(allWines);
     return allWines;
+}
+//TODO
+export function getAllWineFlavors(allSessions: Tasting[]) {
+    /*let allFlavors = getAllWineEntries(allSessions).flat(allSessions);*/
+
 }

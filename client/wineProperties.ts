@@ -28,15 +28,15 @@ const TestWineProperties: WineProperties = {
 PropertyTest();
 
 function PropertyTest() {
-    console.log("Property test");
-    console.log("wineProperties.wineFlavors length: " + wineProperties.wineFlavors.length);
-    console.log("wineProperties.wineGrapes length: " + wineProperties.wineGrapes.length);
+    //console.log("Property test");
+    //console.log("wineProperties.wineFlavors length: " + wineProperties.wineFlavors.length);
+    //console.log("wineProperties.wineGrapes length: " + wineProperties.wineGrapes.length);
 
     SaveWineProperties(TestWineProperties);
     LoadWineProperties();
 
-    console.log("wineProperties.wineFlavors length: " + wineProperties.wineFlavors.length);
-    console.log("wineProperties.wineGrapes length: " + wineProperties.wineGrapes.length);
+    //console.log("wineProperties.wineFlavors length: " + wineProperties.wineFlavors.length);
+    //console.log("wineProperties.wineGrapes length: " + wineProperties.wineGrapes.length);
 }
 
 function SaveWineProperties(wineProperties: WineProperties) {
